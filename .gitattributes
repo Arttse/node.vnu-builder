@@ -1,0 +1,13 @@
+* text=auto
+
+.jshintrc  text eol=lf
+.npmignore text eol=lf
+
+*.html text eol=lf
+
+*.js   text eol=lf
+*.json text eol=lf
+
+*.yaml     text eol=lf
+*.yml      text eol=lf
+*.yml.dist text eol=lf

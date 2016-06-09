@@ -1,0 +1,85 @@
+{
+  "name": "vnu-builder",
+  "version": "0.0.0",
+  "description": "Build Validator NU «jar» or «war» files",
+  "main": "index.js",
+  "scripts": {
+    "test": "xo"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arttse/node.vnu-builder.git"
+  },
+  "keywords": [
+    "vnu",
+    "jar",
+    "war",
+    "validator",
+    "nu",
+    "html",
+    "xhtml",
+    "html5",
+    "build",
+    "builder"
+  ],
+  "author": "Nikita «Arttse» Bystrov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Arttse/node.vnu-builder/issues"
+  },
+  "homepage": "https://github.com/Arttse/node.vnu-builder#readme",
+  "devDependencies": {
+    "xo": "*"
+  },
+  "dependencies": {
+    "fs-extra": "^0.30.0",
+    "got": "6",
+    "is-plain-object": "2"
+  },
+  "xo": {
+    "esnext": true,
+    "rules": {
+      "no-multi-spaces": [
+        "error",
+        {
+          "exceptions": {
+            "ImportDeclaration": true,
+            "VariableDeclarator": true,
+            "Property": true
+          }
+        }
+      ],
+      "no-spaced-func": 0,
+      "space-in-parens": [
+        "error",
+        "always"
+      ],
+      "no-multiple-empty-lines": [
+        "error",
+        {
+          "max": 2,
+          "maxEOF": 1
+        }
+      ],
+      "padded-blocks": [
+        "error",
+        "always"
+      ],
+      "indent": [
+        "error",
+        2
+      ],
+      "key-spacing": [
+        "error",
+        {
+          "beforeColon": true,
+          "afterColon": true,
+          "align": "colon"
+        }
+      ]
+    }
+  }
+}
