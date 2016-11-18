@@ -1,2 +1,19 @@
-/.*/
-/node_modules/
+# Hidden folders
+.*/
+
+# Backup files
+*~
+
+# Node.js
+node_modules/
+npm-debug.log
+
+# Bower
+bower_components/
+
+# Test coverage
+coverage/
+
+# Yarn - package manager
+.yarnclean
+yarn.lock
