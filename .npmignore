@@ -1,5 +1,5 @@
-/.*/
-.editorconfig
-.travis.yml
-.gitattributes
-test.js
+# All
+*
+
+# But not
+!lib/**
