@@ -183,7 +183,7 @@ module.exports = opts => {
     /** Catch error and remove cache */
     .catch ( error => {
 
-      fsPromise.remove ( data.opts.cacheDir );
+      fsPromise.remove ( opts.cacheDir );
 
       return Promise.reject ( error );
 
