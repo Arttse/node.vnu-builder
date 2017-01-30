@@ -67,7 +67,7 @@ module.exports = opts => {
 
     } )
 
-    /** 5. Patch build.py version validator */
+    /** 5. Patch build.py validator version */
     .then ( () => {
 
       console.log ( `[${showTime ()}] Status: Repository "${data.opts.repoAuthor}/${data.opts.repoName}" was cloned...` );
@@ -80,7 +80,7 @@ module.exports = opts => {
         } )
         .then ( fileData => {
 
-          fileData = fileData.replace ( /validatorVersion\s=.+/, `validatorVersion = "${data.vnuVersion}"` );
+          fileData = fileData.replace ( /validatorVersion\s=.+/g, `validatorVersion = "${data.vnuVersion}"` );
 
           return fsPromise.writeFile ( data.opts.buildFile, fileData, {encoding : 'utf8'} );
 
