@@ -17,3 +17,7 @@ coverage/
 # Yarn - package manager
 .yarnclean
 yarn.lock
+
+# After building
+vnu.jar
+vnu.war
