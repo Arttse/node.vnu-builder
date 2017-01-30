@@ -17,8 +17,6 @@ const showTime      = require ( './lib/show-time' );
  */
 module.exports = opts => {
 
-  console.time ( `Build Validator Nu file successfully` );
-
   const data = {};
 
   /** 1. Configure options */
@@ -158,8 +156,6 @@ module.exports = opts => {
     .then ( () => {
 
       console.log ( `[${showTime ()}] Status: Cache "${data.opts.cacheDir}" was removed...` );
-
-      console.timeEnd ( `Build Validator Nu file successfully` );
 
       return data;
 
