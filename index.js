@@ -163,15 +163,6 @@ module.exports = opts => {
 
       return data;
 
-    } )
-
-    /** Catch error and remove cache */
-    .catch ( error => {
-
-      fsPromise.remove ( opts.cacheDir );
-
-      return Promise.reject ( error );
-
     } );
 
 };
