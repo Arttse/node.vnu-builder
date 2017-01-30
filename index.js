@@ -1,12 +1,12 @@
 'use strict';
 
 /** Modules */
-const fsPromise     = require ( './lib/fs-promise' );
-const configOpts    = require ( './lib/config-opts' );
-const exec          = require ( './lib/exec' );
+const fsPromise = require ( './lib/fs-promise' );
+const configOpts = require ( './lib/config-opts' );
+const exec = require ( './lib/exec' );
 const getCommitInfo = require ( './lib/get-commit-info' );
 const getVnuVersion = require ( './lib/get-vnu-version' );
-const showTime      = require ( './lib/show-time' );
+const showTime = require ( './lib/show-time' );
 
 
 /**
@@ -96,25 +96,25 @@ module.exports = opts => {
       return new Promise ( ( resolve, reject ) => {
 
         const spawn = require ( 'child_process' ).spawn;
-        const build = spawn ( relativeBuildDir, data.opts.buildArguments.concat(data.opts.outputFileType), {cwd : data.opts.cacheDir} );
+        const build = spawn ( relativeBuildDir, data.opts.buildArguments.concat ( data.opts.outputFileType ), {cwd : data.opts.cacheDir} );
 
         build.stdout.on ( 'data', d => {
-
-          console.log ( d.toString ().trim () );
-
+          if ( data.opts.buildLog ) {
+            console.log ( d.toString ().trim () );
+          }
         } );
 
         build.stderr.on ( 'data', d => {
-
-          console.log ( d.toString ().trim () );
-
+          if ( data.opts.buildLog ) {
+            console.log ( d.toString ().trim () );
+          }
         } );
 
         build.on ( 'close', code => {
 
           if ( code > 0 ) {
 
-            reject ( new Error ( `Build exited with code ${code}` ) );
+            reject ( new Error ( `Build exited with code ${code}. Run build with «{buildLog:true}» option for more details.` ) );
 
           } else {
 
