@@ -33,6 +33,7 @@
   "homepage": "https://github.com/Arttse/node.vnu-builder#readme",
   "devDependencies": {
     "ava": "0.17",
+    "ora": "1",
     "xo": "0.17"
   },
   "dependencies": {

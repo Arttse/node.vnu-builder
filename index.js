@@ -17,37 +17,72 @@ const getVnuVersion = require ( './lib/get-vnu-version' );
 module.exports = opts => {
 
   const data = {};
+  let spin;
 
-  /** 1. Configure options */
-  return configOpts ( opts )
+  return Promise.resolve ()
 
-  /** 2. Get info about commit from Github repository */
-    .then ( opts => {
+  /** Configure options */
+    .then ( () => {
+      return configOpts ( opts )
+    } )
+    .then ( opts => data.opts = opts )
 
-      console.log ( `Status: Options configured...` );
-
-      data.opts = opts;
-
-      return getCommitInfo ( opts );
-
+    /** Set spin if exists */
+    .then ( () => {
+      if ( data.opts.spin ) {
+        if ( data.opts.spin.constructor.name === 'Ora' ) {
+          spin = data.opts.spin;
+          delete data.opts.spin;
+          spin.start ();
+        }
+      }
     } )
 
-    /** 3. Create or clear cache */
-    .then ( commitInfo => {
+    /** Get info about commit from Github repository */
+    .then ( () => {
 
-      console.log ( `Status: Commit "${commitInfo.sha}" info received...` );
+      if ( spin ) {
+        spin.text = 'Get info about commit from Github repository';
+      }
+
+      return getCommitInfo ( data.opts );
+
+    } )
+    .then ( commitInfo => {
 
       data.commitInfo = commitInfo;
       data.vnuVersion = getVnuVersion ( commitInfo.committer.date );
 
-      return fsPromise.emptyDir ( data.opts.cacheDir );
+      if ( spin ) {
+        spin.text = `Info received. Commit «${commitInfo.sha}» from date «${commitInfo.committer.date}»`;
+        spin.succeed ().start ();
+      }
 
     } )
 
-    /** 4. Clone project to cache dir */
+    /** Create or clear cache */
     .then ( () => {
 
-      console.log ( `Status: Cache dir "${data.opts.cacheDir}" was created...` );
+      if ( spin ) {
+        spin.text = 'Create or clear cache';
+      }
+
+      return fsPromise.emptyDir ( data.opts.cacheDir );
+
+    } )
+    .then ( () => {
+      if ( spin ) {
+        spin.text = `Cache dir «${data.opts.cacheDir}» was created`;
+        spin.succeed ().start ();
+      }
+    } )
+
+    /** Clone project to cache dir */
+    .then ( () => {
+
+      if ( spin ) {
+        spin.text = `Clone project to «${data.opts.cacheDir}»`;
+      }
 
       return exec ( `git clone -q https://github.com/${data.opts.repoAuthor}/${data.opts.repoName}.git ${data.opts.cacheDir}` )
         .then ( d => {
@@ -63,11 +98,19 @@ module.exports = opts => {
         } );
 
     } )
+    .then ( () => {
+      if ( spin ) {
+        spin.text = `Repository «${data.opts.repoAuthor}/${data.opts.repoName}» was cloned`;
+        spin.succeed ().start ();
+      }
+    } )
 
-    /** 5. Patch build.py validator version */
+    /** Patch build.py validator version */
     .then ( () => {
 
-      console.log ( `Status: Repository "${data.opts.repoAuthor}/${data.opts.repoName}" was cloned...` );
+      if ( spin ) {
+        spin.text = `Patch «${data.opts.buildFile}» validator version`;
+      }
 
       return fsPromise.stat ( data.opts.buildFile )
         .then ( () => {
@@ -84,11 +127,19 @@ module.exports = opts => {
         } );
 
     } )
+    .then ( () => {
+      if ( spin ) {
+        spin.text = `File «${data.opts.buildFile}» successfully patched`;
+        spin.succeed ().start ();
+      }
+    } )
 
-    /** 6. Build */
+    /** Build using Python */
     .then ( () => {
 
-      console.log ( `Status: File "${data.opts.buildFile}" successfully patched...` );
+      if ( spin ) {
+        spin.text = 'Build using Python';
+      }
 
       const relativeBuildDir = data.opts.buildFile.replace ( data.opts.cacheDir, '.' );
 
@@ -126,11 +177,19 @@ module.exports = opts => {
       } );
 
     } )
+    .then ( () => {
+      if ( spin ) {
+        spin.text = `Successfully built «vnu.${data.opts.outputFileType}» with version «${data.vnuVersion}»`;
+        spin.succeed ().start ();
+      }
+    } )
 
-    /** 7. Copy file to output dir */
+    /** Copy built file to output dir */
     .then ( () => {
 
-      console.log ( `Status: Successfully built "vnu.${data.opts.outputFileType}" file...` );
+      if ( spin ) {
+        spin.text = 'Copy built file to output dir';
+      }
 
       return fsPromise.copy (
         `${data.opts.distDir}/vnu.${data.opts.outputFileType}`,
@@ -141,23 +200,31 @@ module.exports = opts => {
       );
 
     } )
+    .then ( () => {
+      if ( spin ) {
+        spin.text = `File «vnu.${data.opts.outputFileType}» has been successfully copied to «${data.opts.outputDir}»`;
+        spin.succeed ().start ();
+      }
+    } )
 
     /** Remove cache */
     .then ( () => {
 
-      console.log ( `Status: file "vnu.${data.opts.outputFileType}" has been successfully copied to "${data.opts.outputDir}"...` );
+      if ( spin ) {
+        spin.text = 'Remove cache';
+      }
 
       return fsPromise.remove ( data.opts.cacheDir );
 
     } )
+    .then ( () => {
+      if ( spin ) {
+        spin.text = `Cache «${data.opts.cacheDir}» was removed`;
+        spin.succeed ();
+      }
+    } )
 
     /** Return data */
-    .then ( () => {
-
-      console.log ( `Status: Cache "${data.opts.cacheDir}" was removed...` );
-
-      return data;
-
-    } );
+    .then ( () => data );
 
 };
