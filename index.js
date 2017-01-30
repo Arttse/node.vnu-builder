@@ -6,7 +6,6 @@ const configOpts = require ( './lib/config-opts' );
 const exec = require ( './lib/exec' );
 const getCommitInfo = require ( './lib/get-commit-info' );
 const getVnuVersion = require ( './lib/get-vnu-version' );
-const showTime = require ( './lib/show-time' );
 
 
 /**
@@ -25,7 +24,7 @@ module.exports = opts => {
   /** 2. Get info about commit from Github repository */
     .then ( opts => {
 
-      console.log ( `[${showTime ()}] Status: Options configured...` );
+      console.log ( `Status: Options configured...` );
 
       data.opts = opts;
 
@@ -36,7 +35,7 @@ module.exports = opts => {
     /** 3. Create or clear cache */
     .then ( commitInfo => {
 
-      console.log ( `[${showTime ()}] Status: Commit "${commitInfo.sha}" info received...` );
+      console.log ( `Status: Commit "${commitInfo.sha}" info received...` );
 
       data.commitInfo = commitInfo;
       data.vnuVersion = getVnuVersion ( commitInfo.committer.date );
@@ -48,7 +47,7 @@ module.exports = opts => {
     /** 4. Clone project to cache dir */
     .then ( () => {
 
-      console.log ( `[${showTime ()}] Status: Cache dir "${data.opts.cacheDir}" was created...` );
+      console.log ( `Status: Cache dir "${data.opts.cacheDir}" was created...` );
 
       return exec ( `git clone -q https://github.com/${data.opts.repoAuthor}/${data.opts.repoName}.git ${data.opts.cacheDir}` )
         .then ( d => {
@@ -68,7 +67,7 @@ module.exports = opts => {
     /** 5. Patch build.py validator version */
     .then ( () => {
 
-      console.log ( `[${showTime ()}] Status: Repository "${data.opts.repoAuthor}/${data.opts.repoName}" was cloned...` );
+      console.log ( `Status: Repository "${data.opts.repoAuthor}/${data.opts.repoName}" was cloned...` );
 
       return fsPromise.stat ( data.opts.buildFile )
         .then ( () => {
@@ -89,7 +88,7 @@ module.exports = opts => {
     /** 6. Build */
     .then ( () => {
 
-      console.log ( `[${showTime ()}] Status: File "${data.opts.buildFile}" successfully patched...` );
+      console.log ( `Status: File "${data.opts.buildFile}" successfully patched...` );
 
       const relativeBuildDir = data.opts.buildFile.replace ( data.opts.cacheDir, '.' );
 
@@ -131,7 +130,7 @@ module.exports = opts => {
     /** 7. Copy file to output dir */
     .then ( () => {
 
-      console.log ( `[${showTime ()}] Status: Successfully built "vnu.${data.opts.outputFileType}" file...` );
+      console.log ( `Status: Successfully built "vnu.${data.opts.outputFileType}" file...` );
 
       return fsPromise.copy (
         `${data.opts.distDir}/vnu.${data.opts.outputFileType}`,
@@ -146,7 +145,7 @@ module.exports = opts => {
     /** Remove cache */
     .then ( () => {
 
-      console.log ( `[${showTime ()}] Status: file "vnu.${data.opts.outputFileType}" has been successfully copied to "${data.opts.outputDir}"...` );
+      console.log ( `Status: file "vnu.${data.opts.outputFileType}" has been successfully copied to "${data.opts.outputDir}"...` );
 
       return fsPromise.remove ( data.opts.cacheDir );
 
@@ -155,7 +154,7 @@ module.exports = opts => {
     /** Return data */
     .then ( () => {
 
-      console.log ( `[${showTime ()}] Status: Cache "${data.opts.cacheDir}" was removed...` );
+      console.log ( `Status: Cache "${data.opts.cacheDir}" was removed...` );
 
       return data;
 
