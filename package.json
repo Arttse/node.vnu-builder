@@ -34,7 +34,7 @@
   "devDependencies": {
     "ava": "^0.18.1",
     "ora": "1",
-    "xo": "0.17"
+    "xo": "^0.18.1"
   },
   "dependencies": {
     "fs-extra": "2",
