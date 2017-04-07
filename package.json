@@ -39,12 +39,16 @@
   "dependencies": {
     "fs-extra": "2",
     "got": "6",
-    "is-plain-object": "2"
+    "is-plain-object": "2",
+    "which": "^1.2.14"
   },
   "xo": {
     "esnext": true,
     "rules": {
-      "func-call-spacing": ["error", "always"],
+      "func-call-spacing": [
+        "error",
+        "always"
+      ],
       "no-multi-spaces": [
         "error",
         {
@@ -54,7 +58,10 @@
         }
       ],
       "no-spaced-func": 0,
-      "space-in-parens": ["error", "always"],
+      "space-in-parens": [
+        "error",
+        "always"
+      ],
       "no-multiple-empty-lines": [
         "error",
         {
@@ -63,7 +70,10 @@
         }
       ],
       "padded-blocks": 0,
-      "indent": [ "error", 2 ],
+      "indent": [
+        "error",
+        2
+      ],
       "key-spacing": [
         "error",
         {
@@ -72,7 +82,9 @@
           "align": "colon"
         }
       ],
-      "no-extra-parens": ["warn"]
+      "no-extra-parens": [
+        "warn"
+      ]
     }
   }
 }

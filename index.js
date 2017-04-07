@@ -12,6 +12,9 @@ module.exports = opts => {
   /** Configuring an options */
   chain = chain.then ( require ( './lib/steps/configuring-options' ) );
 
+  /** Checking requirements */
+  chain = chain.then ( require ( './lib/steps/checking-requirements' ) );
+
   /** Getting info from Github */
   chain = chain.then ( require ( './lib/steps/getting-info' ) );
 
