@@ -44,21 +44,17 @@
   "xo": {
     "esnext": true,
     "rules": {
+      "func-call-spacing": ["error", "always"],
       "no-multi-spaces": [
         "error",
         {
           "exceptions": {
-            "ImportDeclaration": true,
-            "VariableDeclarator": true,
             "Property": true
           }
         }
       ],
       "no-spaced-func": 0,
-      "space-in-parens": [
-        "error",
-        "always"
-      ],
+      "space-in-parens": ["error", "always"],
       "no-multiple-empty-lines": [
         "error",
         {
@@ -66,14 +62,8 @@
           "maxEOF": 1
         }
       ],
-      "padded-blocks": [
-        "error",
-        "always"
-      ],
-      "indent": [
-        "error",
-        2
-      ],
+      "padded-blocks": 0,
+      "indent": [ "error", 2 ],
       "key-spacing": [
         "error",
         {
@@ -81,7 +71,8 @@
           "afterColon": true,
           "align": "colon"
         }
-      ]
+      ],
+      "no-extra-parens": ["warn"]
     }
   }
 }
