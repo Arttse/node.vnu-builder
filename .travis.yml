@@ -10,3 +10,7 @@ cache:
     - $HOME/.npm
 notifications:
   email: false
+addons:
+  apt:
+    packages:
+      - oracle-java8-set-default
