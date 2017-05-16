@@ -37,7 +37,7 @@
     "xo": "^0.18.2"
   },
   "dependencies": {
-    "fs-extra": "2",
+    "fs-extra": "3",
     "got": "6",
     "is-plain-object": "2",
     "which": "^1.2.14"
