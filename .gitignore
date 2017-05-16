@@ -4,9 +4,11 @@
 # Backup files
 *~
 
+# Logs
+*.log
+
 # Node.js
 node_modules/
-npm-debug.log
 
 # Bower
 bower_components/
@@ -17,6 +19,9 @@ coverage/
 # Yarn - package manager
 .yarnclean
 yarn.lock
+
+# PNPM - package manager
+shrinkwrap.yaml
 
 # After building
 vnu.jar
